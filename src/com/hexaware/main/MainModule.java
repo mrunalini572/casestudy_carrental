@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class MainModule {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final ICarLeaseRepository repository = new ICarLeaseRepositoryImpl(); // Fixed here
+    private static final ICarLeaseRepository repository = new ICarLeaseRepositoryImpl(); // Repository instance
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Car Rental System");
@@ -158,17 +158,20 @@ public class MainModule {
         repository.removeCustomer(id);
         System.out.println("Customer removed successfully.");
     }
-    private static void listCustomers() {
-        List<Customer> customers = repository.listCustomers(); // Fetch the list of customers from the repository
-        if (customers.isEmpty()) {
-            System.out.println("No customers found.");
-            return;
-        }
-        customers.forEach(c -> System.out.printf("ID: %d | %s %s | Email: %s | Phone: %s\n",
-                c.getCustomerID(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhoneNumber()));
-    }
 
-    
+    private static void listCustomers() {
+        try {
+            List<Customer> customers = repository.listCustomers(); // Fetch the list of customers from the repository
+            if (customers.isEmpty()) {
+                System.out.println("No customers found.");
+                return;
+            }
+            customers.forEach(c -> System.out.printf("ID: %d | %s %s | Email: %s | Phone: %s\n",
+                    c.getCustomerID(), c.getFirstName(), c.getLastName(), c.getEmail(), c.getPhoneNumber()));
+        } catch (Exception e) {
+            System.err.println("Error listing customers: " + e.getMessage());
+        }
+    }
 
     private static void findCustomerById() throws CustomerNotFoundException {
         System.out.print("Enter Customer ID: ");

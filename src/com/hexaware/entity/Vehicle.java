@@ -1,92 +1,120 @@
 package com.hexaware.entity;
 
 public class Vehicle {
-	
-	    private int vehicleID;
-	    private String make;
-	    private String model;
-	    private int year;
-	    private double dailyRate;
-	    private String status; // available, notAvailable
-	    private int passengerCapacity;
-	    private double engineCapacity;
 
-	    // Constructors
-	    public Vehicle() {}
+    private int vehicleID;
+    private String make;
+    private String model;
+    private int year;
+    private double dailyRate;
+    private String status; // e.g., "available", "rented"
+    private int passengerCapacity;
+    private double engineCapacity;
 
-	    public Vehicle(int vehicleID, String make, String model, int year, double dailyRate, String status, int passengerCapacity, double engineCapacity) {
-	        this.vehicleID = vehicleID;
-	        this.make = make;
-	        this.model = model;
-	        this.year = year;
-	        this.dailyRate = dailyRate;
-	        this.status = status;
-	        this.passengerCapacity = passengerCapacity;
-	        this.engineCapacity = engineCapacity;
-	    }
+    // Default Constructor
+    public Vehicle() {}
 
-	    // Getters and Setters
-	    public int getVehicleID() {
-	        return vehicleID;
-	    }
+    // Full Constructor
+    public Vehicle(int vehicleID, String make, String model, int year, double dailyRate,
+                   String status, int passengerCapacity, double engineCapacity) {
+        this.vehicleID = vehicleID;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.dailyRate = dailyRate;
+        this.status = status;
+        this.passengerCapacity = passengerCapacity;
+        this.engineCapacity = engineCapacity;
+    }
 
-	    public void setVehicleID(int vehicleID) {
-	        this.vehicleID = vehicleID;
-	    }
+    // Constructor without vehicleID and status (e.g., for insertion use)
+    public Vehicle(String make, String model, int year, double dailyRate,
+                   int passengerCapacity, double engineCapacity) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.dailyRate = dailyRate;
+        this.passengerCapacity = passengerCapacity;
+        this.engineCapacity = engineCapacity;
+        this.status = "available"; // default status
+    }
 
-	    public String getMake() {
-	        return make;
-	    }
+    // Getters and Setters
+    public int getVehicleID() {
+        return vehicleID;
+    }
 
-	    public void setMake(String make) {
-	        this.make = make;
-	    }
+    public void setVehicleID(int vehicleID) {
+        this.vehicleID = vehicleID;
+    }
 
-	    public String getModel() {
-	        return model;
-	    }
+    public String getMake() {
+        return make;
+    }
 
-	    public void setModel(String model) {
-	        this.model = model;
-	    }
+    public void setMake(String make) {
+        this.make = make;
+    }
 
-	    public int getYear() {
-	        return year;
-	    }
+    public String getModel() {
+        return model;
+    }
 
-	    public void setYear(int year) {
-	        this.year = year;
-	    }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-	    public double getDailyRate() {
-	        return dailyRate;
-	    }
+    public int getYear() {
+        return year;
+    }
 
-	    public void setDailyRate(double dailyRate) {
-	        this.dailyRate = dailyRate;
-	    }
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	    public String getStatus() {
-	        return status;
-	    }
+    public double getDailyRate() {
+        return dailyRate;
+    }
 
-	    public void setStatus(String status) {
-	        this.status = status;
-	    }
+    public void setDailyRate(double dailyRate) {
+        this.dailyRate = dailyRate;
+    }
 
-	    public int getPassengerCapacity() {
-	        return passengerCapacity;
-	    }
+    public String getStatus() {
+        return status;
+    }
 
-	    public void setPassengerCapacity(int passengerCapacity) {
-	        this.passengerCapacity = passengerCapacity;
-	    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	    public double getEngineCapacity() {
-	        return engineCapacity;
-	    }
+    public int getPassengerCapacity() {
+        return passengerCapacity;
+    }
 
-	    public void setEngineCapacity(double engineCapacity) {
-	        this.engineCapacity = engineCapacity;
-	    }
-	}
+    public void setPassengerCapacity(int passengerCapacity) {
+        this.passengerCapacity = passengerCapacity;
+    }
+
+    public double getEngineCapacity() {
+        return engineCapacity;
+    }
+
+    public void setEngineCapacity(double engineCapacity) {
+        this.engineCapacity = engineCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vehicleID=" + vehicleID +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", dailyRate=" + dailyRate +
+                ", status='" + status + '\'' +
+                ", passengerCapacity=" + passengerCapacity +
+                ", engineCapacity=" + engineCapacity +
+                '}';
+    }
+}

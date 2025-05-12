@@ -1,27 +1,37 @@
 package com.hexaware.util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class DBPropertyUtil {
 
-    public static String getPropertyString(String propertyFileName) {
-        Properties properties = new Properties();
-        try (InputStream input = new FileInputStream(propertyFileName)) {
-            properties.load(input);
-            String hostname = properties.getProperty("hostname");
-            String dbname = properties.getProperty("dbname");
-            String username = properties.getProperty("username");
-            String password = properties.getProperty("password");
-            String port = properties.getProperty("port");
+    private static Properties properties = new Properties();
 
-            // Construct the connection string
-            return "jdbc:mysql://" + hostname + ":" + port + "/" + dbname + "?user=" + username + "&password=" + password;
+    static {
+        try (InputStream input = DBPropertyUtil.class.getClassLoader().getResourceAsStream("dbconfig.properties")) {
+            if (input == null) {
+                throw new RuntimeException("Unable to load database configuration file");
+            }
+            properties.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error reading properties file: " + e.getMessage());
+            throw new RuntimeException("Unable to load database configuration file", e);
         }
+    }
+
+    public static String getDbUrl() {
+        return properties.getProperty("db.url");
+    }
+
+    public static String getDbUser() {
+        return properties.getProperty("db.user");
+    }
+
+    public static String getDbPassword() {
+        return properties.getProperty("db.password");
+    }
+
+    public static String getDbDriver() {
+        return properties.getProperty("db.driver");
     }
 }

@@ -1,39 +1,64 @@
 package com.hexaware.util;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnUtil {
 
-    // This method gets a connection to the database using DBUtil
-    public static Connection getConnection() {
-        Connection connection = null;
+    // Database connection parameters
+    private static final String URL = "jdbc:mysql://localhost:3306/VehicleRentalDB";  // Update database name if needed
+    private static final String USER = "root";  // MySQL username
+    private static final String PASSWORD = "Mrunalini";  // MySQL password
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";  // MySQL JDBC driver
+
+    static {
         try {
-            // Correctly calling DBUtil.getConnection() to get the database connection
-            connection = DBUtil.getConnection();
-            if (connection != null) {
-                System.out.println("Connection established successfully!");
-            } else {
-                System.out.println("Failed to establish a connection.");
-            }
-        } catch (SQLException e) {
-            // Handle SQLException
-            System.out.println("Error while getting database connection: " + e.getMessage());
+            // Load the MySQL JDBC driver
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("MySQL JDBC driver not found", e);
         }
-        return connection;
     }
 
-    // This method will close the database connection safely
-    public static void closeConnection(Connection connection) {
+    /**
+     * Establishes and returns a connection to the database.
+     * 
+     * @return Connection object
+     * @throws SQLException if the connection cannot be established
+     */
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    /**
+     * Closes the provided database connection.
+     * 
+     * @param conn the Connection to be closed
+     */
+    public static void closeConnection(Connection conn) {
         try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-                System.out.println("Connection closed successfully.");
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
             }
         } catch (SQLException e) {
-            // Handle SQLException when closing the connection
-            System.out.println("Error while closing database connection: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Helper method to close a connection in a finally block, to ensure proper resource management.
+     * 
+     * @param conn the connection to close
+     */
+    public static void closeQuietly(Connection conn) {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            // Log or ignore
+            System.err.println("Error closing connection: " + e.getMessage());
         }
     }
 }
-
